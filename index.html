@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <title>Sa3ka Earn · Play & Withdraw</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ─── RESET & BASE ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #07051a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 1.5rem 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* خلفية ديناميكية بحلقات ملونة */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: #0044ff25;
+            top: -150px;
+            right: -100px;
+            animation: floatOrb 15s infinite alternate ease-in-out;
+        }
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: #00ccff15;
+            bottom: -200px;
+            left: -150px;
+            animation: floatOrb 20s infinite alternate-reverse ease-in-out;
+        }
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: #a855f720;
+            top: 40%;
+            left: 20%;
+            animation: floatOrb 12s infinite alternate ease-in-out;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, -40px) scale(1.3); }
+        }
+
+        /* ─── حاوية رئيسية ─── */
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 200, 255, 0.08);
+            border-radius: 100px;
+            padding: 0.5rem 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.8);
+        }
+
+        nav a {
+            color: #b0b0d0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            padding: 0.2rem 0;
+            border-bottom: 2px solid transparent;
+            transition: 0.2s ease;
+        }
+
+        nav a:hover {
+            color: #6dd5ff;
+            border-bottom-color: #00aaff;
+            text-shadow: 0 0 20px #00aaff33;
+        }
+
+        /* ─── HERO CENTERED ─── */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-icon-wrap {
+            width: 140px;
+            height: 140px;
+            border-radius: 40% 60% 60% 40% / 50% 40% 60% 50%;
+            background: linear-gradient(145deg, #1a1440, #0a0720);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            box-shadow: 
+                0 30px 60px -10px #0044cc55,
+                0 0 0 3px rgba(0, 200, 255, 0.2),
+                0 0 80px rgba(0, 150, 255, 0.1);
+            margin-bottom: 1.5rem;
+            transition: 0.4s ease;
+        }
+
+        .hero-icon-wrap:hover {
+            transform: scale(1.05) rotate(-3deg);
+            box-shadow: 0 40px 70px -5px #0066ff77, 0 0 0 4px rgba(0, 220, 255, 0.4);
+        }
+
+        .hero-icon-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.8));
+        }
+
+        .hero h1 {
+            font-size: 4.2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #ffffff 5%, #a8e6ff 50%, #4dc9ff 90%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 60px rgba(0, 180, 255, 0.15);
+            line-height: 1.1;
+            margin-bottom: 0.2rem;
+        }
+
+        .hero .tagline {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #a89cdb;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.3rem 2rem;
+            border-radius: 60px;
+            border: 1px solid rgba(0, 200, 255, 0.08);
+            backdrop-filter: blur(4px);
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .hero .tagline i {
+            color: #3dcaff;
+            margin: 0 4px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(145deg, #00b8ff, #0066ee);
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding: 0.9rem 3.2rem;
+            border-radius: 80px;
+            box-shadow: 0 25px 40px -10px #0044cc, 0 0 0 2px rgba(0, 200, 255, 0.4) inset;
+            cursor: pointer;
+            transition: 0.25s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-primary i {
+            font-size: 1.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.06) translateY(-3px);
+            background: linear-gradient(145deg, #33ccff, #0077ff);
+            box-shadow: 0 32px 50px -8px #0066ee, 0 0 0 4px rgba(0, 220, 255, 0.5) inset;
+        }
+
+        .stats-ribbon {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem 3rem;
+            margin-top: 1.8rem;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 80px;
+            padding: 0.5rem 2.5rem;
+        }
+
+        .stats-ribbon span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #c8c0f0;
+            font-size: 0.95rem;
+        }
+
+        .stats-ribbon i {
+            color: #3dcaff;
+            font-size: 1rem;
+        }
+        .stats-ribbon .gold {
+            color: #ffd966;
+        }
+
+        /* ─── FEATURES (GRID 2x2) ─── */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0 2.5rem;
+        }
+
+        .feature-card {
+            background: rgba(12, 8, 38, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 180, 255, 0.06);
+            border-radius: 28px;
+            padding: 1.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            transition: 0.3s ease;
+            box-shadow: 0 15px 30px -15px #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(0, 200, 255, 0.03), transparent 60%);
+            pointer-events: none;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: #00ccff;
+            background: rgba(20, 14, 55, 0.8);
+            box-shadow: 0 30px 50px -15px #0044ff33, 0 0 0 1px rgba(0, 200, 255, 0.1) inset;
+        }
+
+        .fc-icon {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #00aaff15, #0066ff10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #4dc9ff;
+            border: 1px solid rgba(0, 200, 255, 0.1);
+        }
+
+        .fc-text h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f0edff;
+            margin-bottom: 0.1rem;
+        }
+
+        .fc-text p {
+            font-size: 0.85rem;
+            color: #a89cdb;
+        }
+
+        /* ─── SPLIT SECTION (About + Gallery Placeholder) ─── */
+        .split-about-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2.5rem 0 2rem;
+        }
+
+        .split-about-gallery > * {
+            flex: 1 1 280px;
+        }
+
+        .about-box {
+            background: linear-gradient(145deg, #14103a, #0a0628);
+            border-radius: 32px;
+            padding: 2rem 2rem 2.2rem;
+            border: 1px solid rgba(0, 180, 255, 0.08);
+            box-shadow: 0 30px 50px -20px #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-box::after {
+            content: "⚡";
+            font-size: 7rem;
+            position: absolute;
+            bottom: -30px;
+            right: -10px;
+            opacity: 0.03;
+            transform: rotate(15deg);
+        }
+
+        .about-box h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #b3eaff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.8rem;
+        }
+
+        .about-box p {
+            color: #c8bef5;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+        }
+
+        .about-box .pill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+        }
+
+        .about-box .pill-group span {
+            background: rgba(0, 180, 255, 0.06);
+            border: 1px solid rgba(0, 180, 255, 0.06);
+            border-radius: 40px;
+            padding: 0.2rem 1.4rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #8ac8ff;
+        }
+
+        /* Gallery Placeholder */
+        .gallery-empty {
+            background: rgba(12, 8, 38, 0.5);
+            backdrop-filter: blur(6px);
+            border-radius: 32px;
+            border: 2px dashed rgba(0, 180, 255, 0.1);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100%;
+            min-height: 220px;
+            transition: 0.3s ease;
+        }
+
+        .gallery-empty:hover {
+            border-color: rgba(0, 200, 255, 0.3);
+            background: rgba(12, 8, 38, 0.7);
+        }
+
+        .gallery-empty i {
+            font-size: 2.6rem;
+            color: #3d2f7a;
+            margin-bottom: 0.6rem;
+            opacity: 0.7;
+        }
+
+        .gallery-empty h4 {
+            color: #7b6da8;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .gallery-empty p {
+            color: #5d4f85;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .gallery-empty .phone-frames {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .gallery-empty .phone-frames .ph {
+            width: 50px;
+            height: 100px;
+            background: rgba(40, 30, 80, 0.4);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 180, 255, 0.05);
+            transition: 0.2s;
+        }
+
+        .gallery-empty .phone-frames .ph:hover {
+            background: rgba(60, 40, 120, 0.5);
+            border-color: rgba(0, 200, 255, 0.15);
+        }
+
+        /* ─── PARTNER BAR ─── */
+        .partner-cta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem 2.5rem;
+            margin: 1rem 0 2rem;
+            padding: 0.7rem 1.8rem;
+            background: rgba(10, 6, 30, 0.3);
+            backdrop-filter: blur(8px);
+            border-radius: 80px;
+            border: 1px solid rgba(0, 180, 255, 0.04);
+        }
+
+        .partner-cta span {
+            color: #b3e4ff;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .partner-cta a {
+            color: #7be8ff;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .partner-cta a:hover {
+            color: #ffffff;
+            border-bottom-color: #00aaff;
+        }
+
+        /* ─── EXTRA DOWNLOAD ─── */
+        .download-extra {
+            text-align: center;
+            margin: 1.5rem 0 0.5rem;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 200, 255, 0.15);
+            color: #d6eaff;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.7rem 2.6rem;
+            border-radius: 80px;
+            cursor: pointer;
+            transition: 0.25s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(6px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 200, 255, 0.05);
+            border-color: #00ccff;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -10px #0044cc33;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            text-align: center;
+            padding: 2.5rem 0.5rem 1.5rem;
+            color: #4f427a;
+            border-top: 1px solid #1f1942;
+            margin-top: 2rem;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        footer i {
+            color: #3dcaff;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 1rem 0;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .hero .tagline {
+                font-size: 1.1rem;
+                padding: 0.2rem 1.2rem;
+            }
+            .hero-icon-wrap {
+                width: 110px;
+                height: 110px;
+            }
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+            .feature-card {
+                padding: 1.2rem 1rem;
+                flex-direction: column;
+                text-align: center;
+            }
+            .fc-icon {
+                width: 50px;
+                height: 50px;
+                min-width: 50px;
+                font-size: 1.4rem;
+            }
+            .stats-ribbon {
+                gap: 0.8rem 1.5rem;
+                padding: 0.4rem 1.2rem;
+                font-size: 0.8rem;
+            }
+            .about-box h2 {
+                font-size: 1.6rem;
+            }
+            .partner-cta {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0.6rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn-primary {
+                padding: 0.7rem 2rem;
+                font-size: 1rem;
+            }
+            .hero .tagline {
+                font-size: 0.95rem;
+            }
+            .stats-ribbon {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.2rem;
+                background: transparent;
+                border: none;
+                padding: 0;
+            }
+            nav {
+                gap: 0.4rem 1rem;
+                padding: 0.4rem 1rem;
+            }
+            nav a {
+                font-size: 0.75rem;
+            }
+            .gallery-empty .phone-frames .ph {
+                width: 40px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Orbs -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+
+    <div class="container">
+
+        <!-- ─── NAV ─── -->
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="delete-account.html">Delete</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <!-- ─── HERO ─── -->
+        <section class="hero">
+            <div class="hero-icon-wrap">
+                <img src="https://firebasestorage.googleapis.com/v0/b/gift-drop-73021.firebasestorage.app/o/Sa3ka.png?alt=media&token=03e03afa-8e8c-43b1-922d-5828c5061b2d" alt="Sa3ka Earn" />
+            </div>
+            <h1>Sa3ka Earn</h1>
+            <div class="tagline">
+                <i class="fas fa-circle" style="font-size: 0.4rem; vertical-align: middle;"></i>
+                play &bull; earn &bull; withdraw
+                <i class="fas fa-circle" style="font-size: 0.4rem; vertical-align: middle;"></i>
+            </div>
+
+            <a href="https://play.google.com/store/apps/details?id=com.sa3ka.sa3kaearn" class="btn-primary" target="_blank">
+                <i class="fab fa-google-play"></i> Download App
+            </a>
+
+            <div class="stats-ribbon">
+                <span><i class="fas fa-download"></i> 350K+ downloads</span>
+                <span><i class="fas fa-star gold"></i> 4.7 ★</span>
+                <span><i class="fas fa-wallet"></i> Instant cashout</span>
+                <span><i class="fas fa-globe"></i> Global</span>
+            </div>
+        </section>
+
+        <!-- ─── FEATURES 2x2 ─── -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="fc-icon"><i class="fas fa-gamepad"></i></div>
+                <div class="fc-text">
+                    <h3>Play & Earn</h3>
+                    <p>Daily tasks, surveys & mini-games</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="fc-icon"><i class="fas fa-user-plus"></i></div>
+                <div class="fc-text">
+                    <h3>Refer & Grow</h3>
+                    <p>Invite friends, get 30% commission</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="fc-icon"><i class="fas fa-coins"></i></div>
+                <div class="fc-text">
+                    <h3>Instant Payout</h3>
+                    <p>Visa, PayPal, crypto & gift cards</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="fc-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="fc-text">
+                    <h3>Fully Secure</h3>
+                    <p>Your data is encrypted & safe</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── PARTNER BAR ─── -->
+        <div class="partner-cta">
+            <span><i class="fas fa-handshake"></i> Become a partner</span>
+            <a href="#"><i class="fas fa-arrow-right"></i> Join now</a>
+        </div>
+
+        <!-- ─── ABOUT + GALLERY PLACEHOLDER ─── -->
+        <div class="split-about-gallery">
+            <div class="about-box">
+                <h2>⚡ Sa3ka Earn</h2>
+                <p>
+                    <strong>Sa3ka Earn</strong> is the easiest way to turn your free time into real cash.
+                    Complete fun surveys, play light games, refer your friends, and withdraw your
+                    earnings instantly via e-wallets, bank cards, or recharge codes.
+                    No experience needed — just pure rewards.
+                </p>
+                <div class="pill-group">
+                    <span><i class="fas fa-check-circle" style="color:#3dcaff; margin-right:4px;"></i> Surveys</span>
+                    <span><i class="fas fa-check-circle" style="color:#3dcaff; margin-right:4px;"></i> Referrals</span>
+                    <span><i class="fas fa-check-circle" style="color:#3dcaff; margin-right:4px;"></i> Fast cash</span>
+                </div>
+            </div>
+
+            <div class="gallery-empty">
+                <i class="fas fa-mobile-alt"></i>
+                <h4>App Screenshots</h4>
+                <p>We're preparing fresh visuals — stay tuned!</p>
+                <div class="phone-frames">
+                    <span class="ph"></span>
+                    <span class="ph"></span>
+                    <span class="ph"></span>
+                    <span class="ph"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── EXTRA DOWNLOAD ─── -->
+        <div class="download-extra">
+            <a href="https://play.google.com/store/apps/details?id=com.sa3ka.sa3kaearn" class="btn-secondary" target="_blank">
+                <i class="fab fa-google-play"></i> Get it on Google Play
+            </a>
+        </div>
+
+        <!-- ─── FOOTER ─── -->
+        <footer>
+            &copy; 2025 <strong>Sa3ka Earn</strong> &middot; built for earners <i class="fas fa-bolt"></i>
+        </footer>
+
+    </div>
+
+</body>
+</html>
