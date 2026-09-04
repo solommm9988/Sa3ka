@@ -1,0 +1,12 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.sa3ka.sa3kaearn",
+    "sha256_cert_fingerprints": [
+      "9B:2C:6F:90:1B:3F:A1:10:84:AA:0F:78:DD:DB:23:FC:27:72:79:AE:7B:E3:07:B6:2B:3A:74:F4:D3:0E:19:BA",
+      "C2:80:BF:40:5F:D7:1F:E9:65:55:7D:45:99:30:D9:5C:6A:81:B0:DF:D2:7B:68:69:E8:3A:2D:AA:6A:BB:3B:B1",
+      "78:B4:C4:AC:0F:62:97:C8:ED:49:4D:72:A2:EF:01:2D:3B:80:2C:90:4B:65:B4:90:F5:88:02:BD:46:30:2E:31"
+    ]
+  }
+}]
